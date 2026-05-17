@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LifeLine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg-light:#f4f6fa;
+  --bg-dark:#0c0f14;
+  --card-light:rgba(255,255,255,0.6);
+  --card-dark:rgba(25,28,36,0.6);
+  --text-light:#111;
+  --text-dark:#f5f5f7;
+  --accent:#ff3b30;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+
+body{
+  background:var(--bg-light);
+  color:var(--text-light);
+  transition:0.4s ease;
+  animation:fadeIn 0.5s ease;
+}
+
+body.dark{
+  background:var(--bg-dark);
+  color:var(--text-dark);
+}
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 8%;
+}
+
+.nav-links a{
+  margin-left:20px;
+  text-decoration:none;
+  color:inherit;
+}
+
+.theme-toggle{
+  cursor:pointer;
+  margin-left:20px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:80px 20px;
+}
+
+.card{
+  backdrop-filter:blur(25px);
+  border-radius:28px;
+  padding:40px;
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 30px 60px rgba(0,0,0,0.1);
+  transition:0.4s ease;
+}
+
+body:not(.dark) .card{
+  background:var(--card-light);
+}
+
+body.dark .card{
+  background:var(--card-dark);
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+button{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  margin-bottom:15px;
+  background:transparent;
+  color:inherit;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(15px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>🩸 LifeLine</div>
+  <div>
+    <span class="nav-links">
+      <a href="/">Home</a>
+      <a href="/register">Register</a>
+      <a href="/search">Search</a>
+      <a href="/admin">Admin</a>
+    </span>
+    <span class="theme-toggle" onclick="toggleTheme()" id="themeIcon">🌙</span>
+  </div>
+</div>
+
+<div class="container">
+{% block content %}{% endblock %}
+</div>
+
+<script>
+function applyTheme(theme){
+  if(theme==="dark"){
+    document.body.classList.add("dark");
+    document.getElementById("themeIcon").innerText="☀️";
+  } else {
+    document.body.classList.remove("dark");
+    document.getElementById("themeIcon").innerText="🌙";
+  }
+}
+
+function toggleTheme(){
+  let current=document.body.classList.contains("dark")?"dark":"light";
+  let newTheme=current==="dark"?"light":"dark";
+  localStorage.setItem("theme",newTheme);
+  applyTheme(newTheme);
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  let saved=localStorage.getItem("theme");
+  if(saved){
+    applyTheme(saved);
+  } else {
+    if(window.matchMedia("(prefers-color-scheme: dark)").matches){
+      applyTheme("dark");
+    }
+  }
+});
+</script>
+
+</body>
+</html>

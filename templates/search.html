@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <h2>Search Donor</h2>
+
+  <form method="POST">
+    <input type="text" name="keyword" placeholder="Search by name, city or blood group">
+    <button type="submit">Search</button>
+  </form>
+
+  {% if results %}
+    <div style="margin-top:30px;">
+    {% for r in results %}
+      <div class="card" style="margin-bottom:15px;">
+        <strong>{{ r.name }}</strong><br>
+        🩸 {{ r.blood }}<br>
+        📍 {{ r.city }}<br>
+        📱 {{ r.mobile }}
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

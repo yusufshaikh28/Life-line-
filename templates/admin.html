@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 style="margin-bottom:40px;">Admin Dashboard</h1>
+
+<div class="card" style="margin-bottom:30px;">
+  <h2>Total Donors</h2>
+  <h1 style="font-size:60px;">{{ total }}</h1>
+</div>
+
+<div class="card">
+  <h2 style="margin-bottom:20px;">Manage Donors</h2>
+
+  {% for d in donors %}
+    <div style="padding:20px;border-radius:20px;margin-bottom:15px;background:rgba(0,0,0,0.03);display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <strong>{{ d.name }}</strong><br>
+        🩸 {{ d.blood }} | 📍 {{ d.city }} | 📱 {{ d.mobile }}
+      </div>
+      <div>
+        <a href="/admin/edit/{{ d._id }}" style="margin-right:10px;">✏️ Edit</a>
+        <a href="/admin/delete/{{ d._id }}" onclick="return confirm('Delete this donor?')">🗑 Delete</a>
+      </div>
+    </div>
+  {% endfor %}
+
+  <br>
+  <a href="/admin/logout">Logout</a>
+</div>
+
+{% endblock %}

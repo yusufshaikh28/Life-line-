@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card" style="text-align:center;">
+  <h1 style="font-size:48px;">Donate Blood. Save Lives.</h1>
+  <p style="opacity:0.7;">Human connection powered by technology.</p>
+
+  <h2 id="counter" style="margin-top:40px;font-size:60px;">
+    {{ total|default(0) }}
+  </h2>
+  <p>Registered Donors</p>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  let counter=document.getElementById("counter");
+  let target=Number("{{ total|default(0) }}");
+  let count=0;
+
+  let interval=setInterval(()=>{
+    count+=Math.ceil(target/40);
+    if(count>=target){
+      count=target;
+      clearInterval(interval);
+    }
+    counter.innerText=count;
+  },30);
+});
+</script>
+
+{% endblock %}
